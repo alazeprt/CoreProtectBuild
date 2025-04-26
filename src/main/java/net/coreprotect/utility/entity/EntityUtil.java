@@ -62,7 +62,6 @@ import net.coreprotect.bukkit.BukkitAdapter;
 import net.coreprotect.database.rollback.Rollback;
 import net.coreprotect.thread.CacheHandler;
 import net.coreprotect.thread.Scheduler;
-import net.coreprotect.utility.Util;
 import net.coreprotect.utility.WorldUtils;
 
 public class EntityUtil {
@@ -250,6 +249,10 @@ public class EntityUtil {
                             DyeColor set = (DyeColor) value;
                             cat.setCollarColor(set);
                         }
+                        else if (count == 2) {
+                            boolean set = (Boolean) value;
+                            cat.setSitting(set);
+                        }
                     }
                     else if (entity instanceof Fox) {
                         Fox fox = (Fox) entity;
@@ -436,6 +439,9 @@ public class EntityUtil {
                         else if (count == 1) {
                             DyeColor set = (DyeColor) value;
                             wolf.setCollarColor(set);
+                        }
+                        else if (count == 2) {
+                            BukkitAdapter.ADAPTER.setWolfVariant(wolf, value);
                         }
                     }
                     else if (entity instanceof ZombieVillager) {

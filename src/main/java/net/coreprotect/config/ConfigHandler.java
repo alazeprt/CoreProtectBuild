@@ -109,6 +109,8 @@ public class ConfigHandler extends Queue {
     public static ConcurrentHashMap<String, List<ItemStack>> itemsBuy = new ConcurrentHashMap<>();
     public static ConcurrentHashMap<String, Object[]> hopperAbort = new ConcurrentHashMap<>();
     public static ConcurrentHashMap<String, Object[]> hopperSuccess = new ConcurrentHashMap<>();
+    public static ConcurrentHashMap<String, ConcurrentHashMap<String, Long>> dispenserNoChange = new ConcurrentHashMap<>();
+    public static ConcurrentHashMap<String, Object[]> dispenserPending = new ConcurrentHashMap<>();
     public static Map<String, List<ItemStack[]>> forceContainer = syncMap();
     public static Map<String, Integer> lookupType = syncMap();
     public static Map<String, Object[]> lookupThrottle = syncMap();
@@ -134,7 +136,7 @@ public class ConfigHandler extends Queue {
     public static ConcurrentHashMap<String, String> language = new ConcurrentHashMap<>();
     public static List<String> databaseTables = new ArrayList<>();
 
-    private static void checkPlayers(Connection connection) {
+    public static void checkPlayers(Connection connection) {
         ConfigHandler.playerIdCache.clear();
         ConfigHandler.playerIdCacheReversed.clear();
         for (Player player : Bukkit.getServer().getOnlinePlayers()) {
@@ -263,7 +265,7 @@ public class ConfigHandler extends Queue {
             ConfigHandler.hikariDataSource = new HikariDataSource(config);
         }
 
-        Database.createDatabaseTables(ConfigHandler.prefix, null, Config.getGlobal().MYSQL, false);
+        Database.createDatabaseTables(ConfigHandler.prefix, false, null, Config.getGlobal().MYSQL, false);
     }
 
     public static void loadTypes(Statement statement) {
